@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Button, Checkbox, Input, List, Space, Tabs, message }  from 'antd';
+import { Button, Checkbox, Input, List, Space, Tabs, message, Popconfirm }  from 'antd';
 import './App.css';
 
 function App() {
@@ -17,6 +17,7 @@ function App() {
         isCompleted: false
       }])
       setTaskDetail('')
+      message.success('Task added')
   }}
 
   const handleRemoveTask = (index) => {
@@ -107,8 +108,15 @@ function App() {
                   <Checkbox onClick={() => handleUpdateActiveTask(item, index)} checked={item.isCompleted}>
                     <p style={{textDecoration: item.isCompleted ? 'line-through': 'none'}}>{item.detail}</p>
                   </Checkbox>
-                  <Button onClick={() => handleRemoveTask(index)}>del</Button>
-
+                  <Popconfirm
+                    title="Delete the task"
+                    description="Are you sure to delete this task?"
+                    onConfirm={() => handleRemoveTask(index)}
+                    okText="Yes"
+                    cancelText="No">
+                    <Button type='ghost' ><img src='https://cdn-icons-png.flaticon.com/512/2891/2891491.png' width={15}/></Button>
+                  </Popconfirm>
+                  
               </List.Item>
             </div>))
           )}
